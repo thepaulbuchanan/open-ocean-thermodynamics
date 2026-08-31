@@ -25,11 +25,14 @@ class OceanThermalVisualizer:
         # Render the continuous data plane using an intuitive thermal gradient
         cax = ax.imshow(data_matrix, cmap='YlOrRd', aspect='auto', origin='upper')
         
-        # Map explicit categorical ticks matching our physical anchors
+                # Ensure the axes possess designated anchors before injecting text strings
         ax.set_xticks(np.arange(len(years)))
         ax.set_xticklabels(years)
+        
+        # FIX: Explicitly set the y-tick coordinates first
         ax.set_yticks(np.arange(len(regimes)))
         ax.set_yticklabels([f"Regime {r}" for r in regimes])
+
         
         ax.set_title("2D Spatial-Temporal Heat Propagation Anomalies (2020-2025)", weight='bold', pad=15)
         ax.set_xlabel("Timeline (Calendar Years)", labelpad=10)
