@@ -16,7 +16,7 @@ if os.path.exists(TARGET_DIR):
     shutil.rmtree(TARGET_DIR)
 
 print("📥 Executing clean Git repository download...")
-!git clone https://github.com
+
 
 os.chdir(TARGET_DIR)
 if TARGET_DIR not in sys.path:
