@@ -1,0 +1,27 @@
+# Local data files (never commit raw planetary datasets)
+data/raw/*
+data/processed/*
+!data/raw/README.md
+!data/processed/README.md
+
+# Python environment and compilation artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+.ENV/
+.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# LaTeX compilation garbage (if editing paper locally)
+*.aux
+*.log
+*.toc
+*.synctex.gz
+*.pdf
+*.blg
+*.bbl
