@@ -43,3 +43,16 @@ __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
 .DS_Store
+
+# Data – keep structure, ignore large raw files
+data/raw/*
+!data/raw/.gitkeep
+*.nc
+*.zip
+*.tar.gz
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.DS_Store
