@@ -25,7 +25,48 @@
 \begin{abstract}
 Standard forward-modeled climate predictions heavily rely on predefined atmospheric assumptions to dictate oceanic thermal trajectories. This paper introduces an alternative, data-first inverse-modeling framework that isolates vertical ocean layers as an independent thermodynamic system. Utilizing multi-regime empirical observations from global tracking networks, we deploy an Iterative Auto-Regressive Back-Casting Engine (IARBE) to evaluate internal and external boundary layer imbalances. By validating sequential historical blocks against unmodeled forward-steps, we demonstrate how high-impact geodynamic events---such as the massive stratospheric moisture injection of the 2022 Hunga Tonga megablast---cause acute, measurable deviations in the ocean's thermal venting equilibrium. Bivariate Granger Causality matrix inversions demonstrate that deep abyssal plain variances maintain predictive command over surface layer behavior ($F = 3.9058$). Our entire architecture is fully open-source to ensure radical transparency and reproducibility.
 \end{abstract}
+\section{Methods and Data}
+\label{sec:methods}
 
+All results in this study are generated from version-controlled code and publicly available observational products. The complete computational pipeline, intermediate data products, and figure-generation scripts are archived at \url{https://github.com/thepaulbuchanan/open-ocean-thermodynamics} (commit hash recorded at time of submission).
+
+\subsection{Observational Products}
+Vertical ocean heat content (OHC) time series are derived from the following primary sources (exact product versions and access dates are recorded in the accompanying repository):
+
+\begin{itemize}
+    \item Upper ocean (0--2000\,m): IAP/CAS gridded OHC product \citep{cheng2024} and/or NOAA/NCEI equivalent, monthly or annual resolution, 2005--present (full Argo coverage era).
+    \item Deep ocean ($>$2000\,m): Deep Argo and GO-SHIP based estimates where available; otherwise explicitly flagged as sparse or unavailable.
+    \item Ancillary fields: Argo delayed-mode quality-controlled profiles, GRACE/GRACE-FO ocean mass, and satellite altimetry for steric consistency checks.
+\end{itemize}
+
+No synthetic or hard-coded numerical series are used in the final reported results. Any illustrative or unit-test matrices are clearly labelled as such and excluded from scientific claims.
+
+\subsection{Vertical Partitioning}
+The global ocean is partitioned into three analysis regimes for diagnostic purposes:
+\begin{itemize}
+    \item Regime A: 0--200\,m (surface mixed layer)
+    \item Regime B: 200--2000\,m (permanent thermocline)
+    \item Regime C: $>$2000\,m (abyssal)
+\end{itemize}
+These boundaries are operational, not physical impermeable barriers. Vertical exchanges (diapycnal mixing, eddy fluxes, deep convection) are acknowledged and will be examined in subsequent spatial analyses.
+
+\subsection{Statistical Procedures}
+\begin{enumerate}
+    \item Stationarity is assessed via Augmented Dickey--Fuller, KPSS, and Phillips--Perron tests. Cointegration is tested with the Johansen procedure.
+    \item Linear directional dependence is evaluated with lag-selected VAR or VECM models. Lag order is chosen by AIC/BIC/HQ; inference uses block-bootstrap or wild-bootstrap methods.
+    \item Non-linear and information-theoretic measures (transfer entropy, convergent cross mapping, wavelet coherence) are applied as robustness checks.
+    \item All reported test statistics are accompanied by sample size, degrees of freedom, $p$-values (or bootstrap confidence intervals), and sensitivity to lag length.
+\end{enumerate}
+
+\subsection{Reproducibility and Version Control}
+\begin{itemize}
+    \item Exact data product DOIs / snapshot identifiers are recorded.
+    \item Processing choices (gap-filling, seasonal cycle removal, trend removal, quality-control flags) are documented in the repository.
+    \item Random seeds, bootstrap parameters, and software environment (Python package versions) are fixed and declared.
+    \item Intermediate time series used for every published figure and table are archived in the repository.
+\end{itemize}
+
+Any analysis that cannot satisfy the above standards is labelled exploratory or provisional and is not used to support primary claims.
 \section{Introduction and Epistemic Foundations}
 Modern Earth-system diagnostics suffer from a fundamental epistemic circularity: forward climate models are frequently pre-programmed with explicit mathematical assumptions regarding atmospheric gas concentrations, forcing software outputs to strictly conform to preconceived boundaries. When empirical data deviates from these flourishes---such as the rapid ocean heat backlog recorded between 2023 and 2026---the mainstream paradigm forces post-hoc optimizations onto software parameters rather than questioning fundamental input variables. To restore empirical validity, this framework introduces three core physical constraints:
 \begin{enumerate}
